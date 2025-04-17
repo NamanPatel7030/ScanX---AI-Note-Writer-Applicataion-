@@ -6,7 +6,7 @@ export default defineSchema({
     userName: v.string(),
     email: v.string(),
     imageUrl: v.string(),
-    upgrade:v.boolean()
+    upgrade: v.boolean(),
   }),
 
   pdfFiles: defineTable({
@@ -20,7 +20,6 @@ export default defineSchema({
   documents: defineTable({
     embedding: v.array(v.number()),
     text: v.string(),
-    //metadata: v.object(), // Ensures metadata is an object
     metadata: v.any(), // Ensures metadata is an object
   }).vectorIndex("byEmbedding", {
     vectorField: "embedding",
