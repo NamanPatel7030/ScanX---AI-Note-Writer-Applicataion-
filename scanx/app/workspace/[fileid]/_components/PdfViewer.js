@@ -10,7 +10,8 @@ function PdfViewer({ fileUrl }) {
           src={fileUrl + "#toolbar=0"}
           height="90vh"
           width="100%"
-          className="h-[88vh]"
+          className="h-[88vh] rounded-2xl shadow-lg border mt-2"
+          
           
         />
       </h1>

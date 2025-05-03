@@ -12,7 +12,7 @@ export const metadata = {
   description: "Generative Note Taker",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayouat({ children }) {
   return (
     <html lang="en">
       <body className={montserratFont.className}>
