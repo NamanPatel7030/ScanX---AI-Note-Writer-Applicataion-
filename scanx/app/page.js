@@ -53,7 +53,7 @@ export default function Home() {
             </Link>
             <Link href="/">
               <Image
-                src={"/scanx-logo-favi.png"}
+                src={"/scanx-logo.png"}
                 alt="ScanX Logo"
                 width={60}
                 height={60}
