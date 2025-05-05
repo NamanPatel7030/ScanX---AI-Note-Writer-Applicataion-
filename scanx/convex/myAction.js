@@ -13,7 +13,7 @@ export const ingest = action({
       args.splitText,
       args.fileId,
       new GoogleGenerativeAIEmbeddings({
-        apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY, // Use environment variable
+        apiKey: ctx.env.GEMINI_API_KEY, // Use environment variable
         model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
