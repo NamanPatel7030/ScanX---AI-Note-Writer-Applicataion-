@@ -2,7 +2,8 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 import Provider from "./provider";
 import { Toaster } from "../components/components/ui/sonner";
-import Analytics from "./analytics";
+import { Analytics } from "@vercel/analytics/react"
+import AnalyticsGoogle from "./analytics";
 
 
 const montserratFont = Montserrat({
@@ -18,12 +19,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-      <Analytics />
+      
+      <AnalyticsGoogle />
       </head>
       
       <body className={montserratFont.className}>
         <Provider>{children}</Provider>
         <Toaster />
+        <Analytics />
 
       </body>
     </html>

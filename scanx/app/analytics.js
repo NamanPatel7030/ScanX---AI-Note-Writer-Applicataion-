@@ -1,7 +1,7 @@
 import React from "react";
 import Script from "next/script";
 
-function Analytics() {
+function AnalyticsGoogle() {
   return (
     <head>
       <Script
@@ -20,4 +20,4 @@ function Analytics() {
   );
 }
 
-export default Analytics;
+export default AnalyticsGoogle;
