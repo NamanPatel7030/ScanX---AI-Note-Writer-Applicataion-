@@ -62,7 +62,7 @@ const FeaturesPage = () => {
             </Link>
             <Link href="/">
               <Image
-                src={"/scanx-Logo.png"}
+                src={"/scanx-logo.png"}
                 alt="ScanX Logo"
                 width={60}
                 height={60}

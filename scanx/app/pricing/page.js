@@ -17,7 +17,7 @@ function pricing() {
                     Solution
                   </Link>
                   <Link href="/">
-                  <Image src={"/scanx-Logo.png"} alt="ScanX Logo" width={60} height={60} />
+                  <Image src={"/scanx-logo.png"} alt="ScanX Logo" width={60} height={60} />
                   </Link>
                   <Link href="/pricing" className="text-white hover:text-gray-300">
                     Pricing
