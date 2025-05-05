@@ -146,7 +146,7 @@ function CreatorsSection() {
     {
       name: "Ayushi Thumar",
       role: "UI/UX Designer & Developer",
-      image: "/ayushi.png",
+      image: "/Ayushi.png",
       gradient: "from-pink-200 to-white",
       linkedin: "https://www.linkedin.com/in/ayushi-thumar-b07309251",
       instagram: "https://www.instagram.com/ayushi_thumar",
@@ -162,7 +162,7 @@ function CreatorsSection() {
     {
       name: "Naman Gundaniya",
       role: "UI/UX Designer & Developer",
-      image: "/naman.png",
+      image: "/Naman.png",
       gradient: "from-blue-200 to-white",
       linkedin: "https://www.linkedin.com/in/naman-gundaniya-087621209",
       instagram: "https://www.instagram.com/ig_radiation",
