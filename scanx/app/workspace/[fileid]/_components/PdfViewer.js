@@ -1,20 +1,15 @@
-// import { console } from "inspector";
 import React from "react";
 
 function PdfViewer({ fileUrl }) {
-  console.log(fileUrl);
   return (
-    <div>
-      <h1>
+    <div className="h-[calc(100vh-49px)] bg-gray-100 dark:bg-[#0a0a12]">
+      <div className="h-full overflow-hidden">
         <iframe
           src={fileUrl + "#toolbar=0"}
-          height="90vh"
           width="100%"
-          className="h-[88vh] rounded-2xl shadow-lg border mt-2"
-          
-          
+          className="h-full w-full"
         />
-      </h1>
+      </div>
     </div>
   );
 }

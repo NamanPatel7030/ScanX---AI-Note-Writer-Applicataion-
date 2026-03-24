@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 
@@ -14,37 +15,41 @@ const EditorExtension = dynamic(
 );
 
 function TextEditor({ fileId }) {
-  const notes = useQuery(api.notes.GetNotes, { fileId }); // Get saved notes
-  const saveNotes = useMutation(api.notes.AddNotes); // Save notes to DB
-  const [isSaving, setIsSaving] = useState(false); // ✅ Initialize state here
+  const notes = useQuery(api.notes.GetNotes, { fileId });
+  const saveNotes = useMutation(api.notes.AddNotes);
+  const [isSaving, setIsSaving] = useState(false);
 
   const editor = useEditor({
     extensions: [
       StarterKit,
       Underline,
       Highlight.configure({ multicolors: true }),
-      Placeholder.configure({ placeholder: "Start typing..." }),
+      Placeholder.configure({ placeholder: "Start taking notes... Select text and click ✨ for AI insights" }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    editorProps: { attributes: { class: "focus:outline-none h-screen p-5" } },
+    editorProps: {
+      attributes: {
+        class: "focus:outline-none min-h-[70vh] p-6 text-gray-800 dark:text-gray-200 prose dark:prose-invert prose-sm max-w-none",
+      },
+    },
   });
 
-  // Load content when notes change
   useEffect(() => {
     if (editor && notes) {
       editor.commands.setContent(notes);
     }
   }, [notes, editor]);
 
- 
-
-  if (!editor) return <p>Loading editor...</p>; // Prevent errors
+  if (!editor) return (
+    <div className="h-[calc(100vh-49px)] flex items-center justify-center text-gray-500 dark:text-gray-600">
+      <div className="animate-pulse text-sm">Loading editor...</div>
+    </div>
+  );
 
   return (
-    <div>
-      
-
+    <div className="h-[calc(100vh-49px)] flex flex-col">
       <EditorExtension editor={editor} />
-      <div className="overflow-scroll h-[80vh]">
+      <div className="flex-1 overflow-y-auto bg-white dark:bg-[#0e0e16] transition-colors">
         <EditorContent editor={editor} />
       </div>
     </div>

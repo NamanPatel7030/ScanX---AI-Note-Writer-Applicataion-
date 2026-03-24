@@ -1,5 +1,5 @@
 "use client"
-import { Layout, LayoutGridIcon, Shield } from "lucide-react";
+import { LayoutGridIcon, Shield, Sparkles, Plus } from "lucide-react";
 import { Button } from "../../../components/components/ui/button";
 import Image from "next/image";
 import React from "react";
@@ -17,39 +17,66 @@ function SideBar() {
   const GetUserInfo=useQuery(api.user.GetUserInfo,{
     userEmail:user?.primaryEmailAddress?.emailAddress
   });
-  console.log(GetUserInfo)
     const fileList = useQuery(api.pdfStorage.GetUserFiles, {
       userEmail: user?.primaryEmailAddress?.emailAddress,
     });
-    console.log(fileList?.length)
   return (
-    <div className="shadow-md h-screen p-8 ">
-      <Link href="/">
-      <Image src={"/ScanX_Logo.png"} alt="logo" width={280} height={280} />
+    <div className="h-screen p-5 bg-white dark:bg-[#0c0c14] border-r border-gray-100 dark:border-white/[0.06] flex flex-col transition-colors">
+      <Link href="/" className="block mb-7 px-1">
+        <Image src="/ScanX_Logo.png" alt="logo" width={170} height={50} className="dark:brightness-0 dark:invert" />
       </Link>
-      <div className="pt-5">
-        <UploadPdf isMaxFile={fileList?.length>=5&&!GetUserInfo.upgrade}>
-        <Button className="w-full">+ Upload PDF</Button>
+      <div className="mb-5">
+        <UploadPdf isMaxFile={fileList?.length>=5&&!GetUserInfo?.upgrade}>
+          <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 text-white rounded-xl py-5 text-sm font-medium shadow-lg shadow-purple-500/15 hover:shadow-purple-500/25 transition-all duration-300 flex items-center gap-2">
+            <Plus size={18} strokeWidth={2.5} />
+            Upload PDF
+          </Button>
         </UploadPdf>
       </div>
-      <Link href={'/dashboard'}>
-      <div className={`flex gap-2 items-center p-2 mt-10 hover:bg-slate-100 rounded-lg cursor-pointer ${path=='/dashboard'&&'bg-slate-200'}`}>
-        <LayoutGridIcon />
-        <h2>Workspace</h2>
+      <nav className="space-y-0.5">
+        <Link href="/dashboard">
+          <div className={`flex gap-3 items-center px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 text-[13px] font-medium ${
+            path==='/dashboard'
+              ? 'bg-gray-100 dark:bg-white/[0.07] text-gray-900 dark:text-white shadow-sm'
+              : 'text-gray-500 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:text-gray-800 dark:hover:text-gray-300'
+          }`}>
+            <LayoutGridIcon size={17} />
+            <span>Workspace</span>
+          </div>
+        </Link>
+        <Link href="/dashboard/upgrade">
+          <div className={`flex gap-3 items-center px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 text-[13px] font-medium ${
+            path==='/dashboard/upgrade'
+              ? 'bg-gray-100 dark:bg-white/[0.07] text-gray-900 dark:text-white shadow-sm'
+              : 'text-gray-500 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:text-gray-800 dark:hover:text-gray-300'
+          }`}>
+            <Shield size={17} />
+            <span>Upgrade</span>
+          </div>
+        </Link>
+      </nav>
+      <div className="mt-auto">
+        {!GetUserInfo?.upgrade && (
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-gray-50 dark:from-white/[0.03] to-gray-50/50 dark:to-transparent border border-gray-100 dark:border-white/[0.06]">
+            <div className="flex items-center justify-between mb-2.5">
+              <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Storage used</span>
+              <span className="text-xs font-medium text-gray-400 dark:text-gray-500 tabular-nums">{fileList?.length || 0}/5</span>
+            </div>
+            <div className="w-full h-1.5 bg-gray-100 dark:bg-white/[0.06] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-500"
+                style={{ width: `${((fileList?.length || 0) / 5) * 100}%` }}
+              />
+            </div>
+            <p className="text-[11px] text-gray-400 dark:text-gray-600 mt-2.5">{fileList?.length || 0} of 5 free uploads used</p>
+            <Link href="/dashboard/upgrade">
+              <p className="text-[11px] text-purple-500 dark:text-purple-400 mt-1 hover:text-purple-600 dark:hover:text-purple-300 transition-colors flex items-center gap-1 font-medium">
+                <Sparkles size={10} /> Upgrade for unlimited
+              </p>
+            </Link>
+          </div>
+        )}
       </div>
-      </Link>
-      <Link href={'/dashboard/upgrade'}>
-      <div className={`flex gap-2 items-center p-2 mt-1 hover:bg-slate-100 rounded-lg cursor-pointer ${path=='/dashboard/upgrade'&&'bg-slate-200'}`}>
-        <Shield />
-        <h2>Upgrade</h2>
-      </div>
-      </Link>
-      {!GetUserInfo?.upgrade && <div className="absolute bottom-24 w-[80%]">
-        <Progress value={(fileList?.length/5)*100} />
-        <p className="text-sm mt-1">{fileList?.length} out of 5 Pdf uploaded</p>
-        <p className="text-sm text-gray-400 mt-2">Upgrade to upload more Pdf</p>
-      </div>
-}
     </div>
   );
 }

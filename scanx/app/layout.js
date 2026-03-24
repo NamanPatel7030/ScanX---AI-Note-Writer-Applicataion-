@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html>
+    <html suppressHydrationWarning>
       <body className={montserratFont.className}>
         <Provider>{children}</Provider>
         <Toaster />
