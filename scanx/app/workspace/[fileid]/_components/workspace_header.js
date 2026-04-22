@@ -8,6 +8,8 @@ import { useTheme } from "next-themes";
 
 function Workspace({ fileName }) {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
   return (
     <div className="flex items-center justify-between px-4 py-2.5 bg-white/80 dark:bg-[#0c0c14]/80 backdrop-blur-xl border-b border-gray-100 dark:border-white/[0.06] transition-colors sticky top-0 z-20">
       <div className="flex items-center gap-3">
@@ -29,7 +31,7 @@ function Workspace({ fileName }) {
           className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/[0.06] transition-colors text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
           title="Toggle theme"
         >
-          {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+          {mounted ? (theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />) : <Moon size={17} />}
         </button>
         <UserButton afterSignOutUrl="/" />
       </div>

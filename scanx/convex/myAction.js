@@ -13,25 +13,33 @@ class GeminiEmbeddings extends Embeddings {
   }
 
   async _embed(texts) {
-    const requests = texts.map((text) => ({
-      model: `models/${this.model}`,
-      content: { parts: [{ text }] },
-      outputDimensionality: this.dimensions,
-    }));
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:batchEmbedContents?key=${this.apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ requests }),
+    const BATCH_SIZE = 100;
+    const allEmbeddings = [];
+
+    for (let i = 0; i < texts.length; i += BATCH_SIZE) {
+      const batch = texts.slice(i, i + BATCH_SIZE);
+      const requests = batch.map((text) => ({
+        model: `models/${this.model}`,
+        content: { parts: [{ text }] },
+        outputDimensionality: this.dimensions,
+      }));
+      const resp = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:batchEmbedContents?key=${this.apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ requests }),
+        }
+      );
+      if (!resp.ok) {
+        const err = await resp.text();
+        throw new Error(`Embedding API error: ${err}`);
       }
-    );
-    if (!resp.ok) {
-      const err = await resp.text();
-      throw new Error(`Embedding API error: ${err}`);
+      const data = await resp.json();
+      allEmbeddings.push(...data.embeddings.map((e) => e.values));
     }
-    const data = await resp.json();
-    return data.embeddings.map((e) => e.values);
+
+    return allEmbeddings;
   }
 
   async embedDocuments(documents) {
